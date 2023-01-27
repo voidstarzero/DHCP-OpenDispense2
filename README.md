@@ -109,32 +109,32 @@ request subnet-mask, broadcast-address, ...
   plain `dhclient`, run the following command:
 
 ```
-$ cp hooks/dhclient /etc/dhcp/dhclient-exit-hooks.d/ucc_dispense_server_name
+# cp hooks/dhclient /etc/dhcp/dhclient-exit-hooks.d/ucc_dispense_server_name
 ```
 
 If you are using `NetworkManager`, instead run:
 
 ```
-$ cp hooks/NetworkManager-dispatcher /etc/NetworkManager/dispatcher.d/ucc_dispense_server_name
+# cp hooks/NetworkManager-dispatcher /etc/NetworkManager/dispatcher.d/ucc_dispense_server_name
 ```
 
 **4)** If OpenDispense2 is not already configured, create the
   `/etc/opendispense` directory:
 
 ```
-$ mkdir -p /etc/opendispense
+#mkdir -p /etc/opendispense
 ```
 
 **5)** Else, delete the existing configuration:
 
 ```
-$ rm /etc/opendispense/client.conf
+# rm /etc/opendispense/client.conf
 ```
 
 **6)** Create a symlink to the runtime-generated dispense config file:
 
 ```
-$ ln -s /run/dhcp-opendispense/client.conf /etc/opendispense/client.conf
+# ln -s /run/dhcp-opendispense/client.conf /etc/opendispense/client.conf
 ```
 
 If you'd prefer to constrain dispense to using a server learned from a
@@ -142,7 +142,7 @@ particular network interface, instead create the link as follows
 (substituting `<interface>` with the desired interface name):
 
 ```
-$ ln -s /run/dhcp-opendispense/<interface>.conf /etc/opendispense/client.conf
+# ln -s /run/dhcp-opendispense/<interface>.conf /etc/opendispense/client.conf
 ```
 
 ## Future steps
