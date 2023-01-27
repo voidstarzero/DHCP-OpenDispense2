@@ -19,7 +19,23 @@ if [ -z "$reason" -o -z "$interface" ]; then
 fi
 
 remove_config () {
+    # Remove the expiring configuration.
     rm -f "$config_base_dir/$interface.conf"
+
+    # Purge and re-create the all-interfaces symlink, as it may have been
+    # invalidated. We're just happy to get any remaining valid config, and use
+    # it if we can.
+    rm -f "$config_base_dir/client.conf"
+    (
+        cd "$config_base_dir"
+        for iconf in *.conf; do
+            # Don't catch the null glob, or ourself.
+            if [ "$iconf" != '*.conf' -a "$iconf" != "client.conf" ]; then
+                ln -s "$iconf" "client.conf"
+                exit
+            fi
+        done
+    )
 }
 
 generate_config () {
