@@ -105,31 +105,36 @@ request subnet-mask, broadcast-address, ...
     ..., ntp-servers, ucc-dispense-server-name;
 ```
 
-**3)** Copy the `dhclient` hook script to `/etc/dhcp/dhclient-exit-hooks.d`:
+**3)** Copy the appropriate hook to its proper location. If you are using
+  plain `dhclient`, run the following command:
 
 ```
-$ cp hooks/dhclient /etc/dhcp/dhclient-exit-hooks.d/99-ucc_dispense_server_name
+$ cp hooks/dhclient /etc/dhcp/dhclient-exit-hooks.d/ucc_dispense_server_name
+```
+
+If you are using `NetworkManager`, instead run:
+
+```
+$ cp hooks/NetworkManager-dispatcher /etc/NetworkManager/dispatcher.d/ucc_dispense_server_name
 ```
 
 **4)** If OpenDispense2 is not already configured, create the
-  `/etc/opendispense` directory and navigate to it:
+  `/etc/opendispense` directory:
 
 ```
 $ mkdir -p /etc/opendispense
-$ cd /etc/opendispense
 ```
 
-**5)** Else, navigate to and delete the existing configuration:
+**5)** Else, delete the existing configuration:
 
 ```
-$ cd /etc/opendispense
-$ rm client.conf
+$ rm /etc/opendispense/client.conf
 ```
 
 **6)** Create a symlink to the runtime-generated dispense config file:
 
 ```
-$ ln -s /run/dhclient-opendispense/client.conf client.conf
+$ ln -s /run/dhcp-opendispense/client.conf /etc/opendispense/client.conf
 ```
 
 If you'd prefer to constrain dispense to using a server learned from a
@@ -137,11 +142,11 @@ particular network interface, instead create the link as follows
 (substituting `<interface>` with the desired interface name):
 
 ```
-$ ln -s /run/dhclient-opendispense/<interface>.conf client.conf
+$ ln -s /run/dhcp-opendispense/<interface>.conf /etc/opendispense/client.conf
 ```
 
 ## Future steps
 
-- Write hook scripts for `dhcpcd`.
-- Customize client installation script based on the DHCP client in use.
-- Automatically configure NetworkManager as required above.
+- Write hook scripts and instructions for `dhcpcd`.
+- Automate some configuration steps into an installation script.
+- Autodetect which DHCP client setup is in use.
