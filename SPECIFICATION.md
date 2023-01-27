@@ -37,6 +37,8 @@ is relaxed to a "MAY".
 
 *Rationale: the compression requirement in
 [RFC3397](https://www.rfc-editor.org/rfc/rfc3397.html) was established because
-it was anticipated that searchlists may contain many, similar elements.
+it was anticipated that searchlists may contain many similar elements.
 However, it is not anticipated that more than 1 or 2 dispense servers will
-be configured on any particular network, thus reducing the potential benefit.*
+be configured on any particular network, thus reducing the potential benefit.
+On the other hand, decoding the path compression adds complexity to the
+implementation.*
